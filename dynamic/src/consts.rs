@@ -318,6 +318,13 @@ pub mod vars {
         pub const SPECIAL_HI_ATTACK_WALL_TOUCH_FRAME: i32 = 0x1006;
         pub const SPECIAL_HI_ATTACK_WALL_LEAVE_FRAME: i32 = 0x1007;
     }
+    
+    pub mod krool {
+        // flags
+        pub const IS_SPECIAL_N_SKIP_CANNONBALL_SHOOT: i32 = 0x1000;
+        // ints
+        pub const ATTACK_CHARGE_LEVEL: i32 = 0x1000;
+    }
 
     pub mod luigi {
         // flag
