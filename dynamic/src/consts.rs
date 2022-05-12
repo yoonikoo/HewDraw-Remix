@@ -308,6 +308,11 @@ pub mod vars {
         // ints
         pub const AYMR_CHARGE_LEVEL: i32 = 0x1000;
     }
+    
+    pub mod pickel {
+        // flags
+        pub const IS_CURRENT_ATTACK_LW3_SOUL_FIRE: i32 = 0x1000;
+    }
 
     pub mod roy {
         // flags
