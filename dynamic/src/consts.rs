@@ -255,6 +255,11 @@ pub mod vars {
         // flags
         pub const IS_QUICK_DRAW_INSTAKILL: i32 = 0x1000;
     }
+    
+    pub mod inkling {
+        // flag
+        pub const IS_ENABLE_SPECIAL_S_JUMP_EARLY_CANCEL: i32 = 0x1000;
+    }
 
     pub mod kamui {
         // flag
