@@ -285,7 +285,6 @@ pub mod vars {
         // flags
         pub const IS_QUICK_DRAW_INSTAKILL: i32 = 0x1000;
     }
-    
     pub mod inkling {
         // flag
         pub const IS_ENABLE_SPECIAL_S_JUMP_EARLY_CANCEL: i32 = 0x1000;
@@ -428,6 +427,9 @@ pub mod vars {
         pub const IS_CURRENT_FIRAGA_GRAND_MAGIC: i32 = 0x100B;
         pub const IS_CURRENT_BLIZZAGA_GRAND_MAGIC: i32 = 0x100C;
         pub const IS_CURRENT_THUNDAGA_GRAND_MAGIC: i32 = 0x100D;
+
+        // floats
+        pub const SONIC_BLADE_Y: i32 = 0x1000;
     }
 
     pub mod samus {

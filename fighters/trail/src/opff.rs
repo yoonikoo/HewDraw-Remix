@@ -124,7 +124,6 @@ unsafe fn aerial_sweep_hit_actionability(boma: &mut BattleObjectModuleAccessor) 
     if boma.is_status(*FIGHTER_STATUS_KIND_SPECIAL_HI){
         if MotionModule::frame(boma) > 37.0 {
             if AttackModule::is_infliction(boma, *COLLISION_KIND_MASK_HIT) {
-                DamageModule::add_damage(boma, 1.0, 0);
                 VarModule::on_flag(boma.object(), vars::trail::UP_SPECIAL_HIT);
                 VarModule::on_flag(boma.object(), vars::common::UP_SPECIAL_CANCEL);
             }
@@ -226,7 +225,8 @@ pub unsafe fn moveset(fighter: &mut smash::lua2cpp::L2CFighterCommon, boma: &mut
 pub fn trail_frame_wrapper(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
     unsafe {
         common::opff::fighter_common_opff(fighter);
-		trail_frame(fighter)
+		trail_frame(fighter);
+       //trail_specials1_rotation(fighter);
     }
 }
 
@@ -240,3 +240,16 @@ pub unsafe fn trail_frame(fighter: &mut smash::lua2cpp::L2CFighterCommon) {
         moveset(fighter, &mut *info.boma, info.id, info.cat, info.status_kind, info.situation_kind, info.motion_kind.hash, info.stick_x, info.stick_y, info.facing, info.frame);
     }
 }
+// Sora Sonic-Blade 1 Rotation
+// If your current motion is sonicblade 1 and your current frame less than frame 5, then get stick y which you save in var module, rotate top or rot bone calling fighter
+//pub unsafe fn trail_specials1_rotation(fighter: &mut L2CFighterCommon) {
+   // if fighter.is_motion(Hash40::new("special_air_s_start")) 
+      //  || fighter.is_motion(Hash40::new("special_s_start"))
+      // || fighter.is_motion(Hash40::new("special_air_s1"))
+       // || fighter.is_motion(Hash40::new("special_s1")) {
+        
+        //let stick_y = fighter.stick_y();
+        
+        //fighter.set_joint_rotate("top", Vector3f::new(0.0, 0.0, -90.0 * stick_y))
+    //}
+//}
