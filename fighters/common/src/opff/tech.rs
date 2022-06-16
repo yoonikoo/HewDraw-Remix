@@ -281,17 +281,6 @@ extern "C" {
     pub fn stage_id() -> i32;
 }
 
-pub unsafe fn freeze_stages(boma: &mut BattleObjectModuleAccessor) {
-
-    // determine the current stage id
-    //println!("stage id: {}", stage_id());
-
-    // warioware
-    if (stage_id() == 104) {
-        smash::app::FighterUtil::set_stage_pause_for_final(true, boma);
-    }
-}
-
 pub unsafe fn hitfall(boma: &mut BattleObjectModuleAccessor, status_kind: i32, situation_kind: i32, fighter_kind: i32, cat: [i32 ; 4]) {
     if boma.kind() == *FIGHTER_KIND_GAOGAEN
     && boma.is_situation(*SITUATION_KIND_AIR)
@@ -412,16 +401,6 @@ pub unsafe fn check_b_reverse(fighter: &mut L2CFighterCommon) {
     }
 }
 
-unsafe fn clear_taunt(fighter: &mut L2CFighterCommon) {
-    if fighter.is_status_one_of(&[
-        *FIGHTER_STATUS_KIND_LANDING,
-        *FIGHTER_STATUS_KIND_LANDING_LIGHT,
-        *FIGHTER_STATUS_KIND_LANDING_ATTACK_AIR
-    ]) {
-        fighter.clear_command_cat(Cat2::AppealAll);
-    }
-}
-
 pub unsafe fn run(fighter: &mut L2CFighterCommon, lua_state: u64, l2c_agent: &mut L2CAgent, boma: &mut BattleObjectModuleAccessor, cat: [i32 ; 4], status_kind: i32, situation_kind: i32, fighter_kind: i32, stick_x: f32, stick_y: f32, facing: f32, curr_frame: f32) {
     tumble_exit(boma, cat[0], status_kind, situation_kind);
     non_tumble_di(fighter, lua_state, l2c_agent, boma, status_kind);
@@ -434,8 +413,5 @@ pub unsafe fn run(fighter: &mut L2CFighterCommon, lua_state: u64, l2c_agent: &mu
     hitfall(boma, status_kind, situation_kind, fighter_kind, cat);
     respawn_taunt(boma, status_kind);
     teeter_cancel(fighter, boma);
-    clear_taunt(fighter);
-
-    freeze_stages(boma);
 }
     
