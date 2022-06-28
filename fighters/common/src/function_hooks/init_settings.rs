@@ -68,7 +68,7 @@ unsafe fn init_settings_hook(boma: &mut BattleObjectModuleAccessor, situation: s
             *FIGHTER_STATUS_KIND_BURY_WAIT
         ]) && !WorkModule::is_flag(boma, *FIGHTER_INSTANCE_WORK_ID_FLAG_GANON_SPECIAL_S_DAMAGE_FALL_AIR)
         && !WorkModule::is_flag(boma, *FIGHTER_INSTANCE_WORK_ID_FLAG_GANON_SPECIAL_S_DAMAGE_FALL_GROUND) 
-        && VarModule::get_float(boma.object(), vars::common::ECB_Y_OFFSETS) != 0.0 {
+        && VarModule::get_float(boma.object(), vars::common::instance::ECB_Y_OFFSETS) != 0.0 {
             boma.shift_ecb_on_landing();
         }
 
@@ -122,7 +122,7 @@ unsafe fn init_settings_hook(boma: &mut BattleObjectModuleAccessor, situation: s
             *FIGHTER_STATUS_KIND_CLIFF_CATCH,
             *FIGHTER_STATUS_KIND_CLIFF_CATCH_MOVE,
             *FIGHTER_STATUS_KIND_CLIFF_WAIT]) {
-            VarModule::set_vec3(boma.object(), vars::common::LEDGE_POS, GroundModule::hang_cliff_pos_3f(boma));
+            VarModule::set_vec3(boma.object(), vars::common::instance::LEDGE_POS, GroundModule::hang_cliff_pos_3f(boma));
         }
 
         // Repeated tilt scaling; UNUSED

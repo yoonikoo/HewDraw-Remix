@@ -89,11 +89,11 @@ unsafe fn ecb_shifts(boma: &mut BattleObjectModuleAccessor) {
         } else {
             offset = VarModule::get_float(boma.object(), vars::common::instance::ECB_Y_OFFSETS);
         }
-        VarModule::set_float(boma.object(), vars::common::ECB_Y_OFFSETS, offset);
+        VarModule::set_float(boma.object(), vars::common::instance::ECB_Y_OFFSETS, offset);
         GroundModule::set_rhombus_offset(boma, &Vector2f::new(0.0, offset));
     }
-    else if VarModule::get_float(boma.object(), vars::common::ECB_Y_OFFSETS) != 0.0 {
-        VarModule::set_float(boma.object(), vars::common::ECB_Y_OFFSETS, 0.0);
+    else if VarModule::get_float(boma.object(), vars::common::instance::ECB_Y_OFFSETS) != 0.0 {
+        VarModule::set_float(boma.object(), vars::common::instance::ECB_Y_OFFSETS, 0.0);
         GroundModule::set_rhombus_offset(boma, &Vector2f::zero());
     }
     
