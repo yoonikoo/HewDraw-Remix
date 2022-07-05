@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<struct>
+    <struct hash="rebel_gauge">
+        <float hash="add_gauge_mul">0.75</float>
+    </struct>
+</struct>

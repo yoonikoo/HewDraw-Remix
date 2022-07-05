@@ -1,21 +1,22 @@
 use super::*;
-pub mod energy;
-pub mod effect;
-pub mod edge_slipoffs;
-pub mod ledges;
-pub mod get_param;
 pub mod change_motion;
-pub mod transition;
-pub mod djcancel;
-pub mod init_settings;
-pub mod momentum_transfer;
-pub mod directional_influence;
-pub mod hitstun;
 pub mod change_status;
-pub mod is_flag;
 pub mod controls;
+pub mod directional_influence;
+pub mod djcancel;
+pub mod edge_slipoffs;
+pub mod effect;
+pub mod energy;
+pub mod get_param;
+pub mod hitstun;
+pub mod init_settings;
+pub mod is_flag;
 pub mod jumps;
+pub mod ledges;
+pub mod misc;
+pub mod momentum_transfer;
 pub mod stage_hazards;
+pub mod transition;
 
 pub fn install() {
     energy::install();
@@ -34,6 +35,7 @@ pub fn install() {
     momentum_transfer::install();
     jumps::install();
     stage_hazards::install();
+    misc::install();
 
     unsafe {
         // Handles getting rid of the kill zoom
