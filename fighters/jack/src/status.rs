@@ -1,7 +1,39 @@
 use super::*;
 
+pub mod attack3;
+pub mod attack_air;
 pub mod doyle;
 pub mod special_lw;
+pub mod special_lw2;
+pub mod summon;
+
+pub unsafe fn hit_cancel(fighter: &mut L2CFighterCommon) -> bool {
+    if AttackModule::is_infliction_status(fighter.module_accessor, *COLLISION_KIND_MASK_HIT)
+        && !fighter.is_in_hitlag()
+        && fighter.is_cat_flag(Cat1::SpecialLw)
+        && fighter.get_float(0x4D)
+            > ParamModule::get_float(
+                fighter.object(),
+                ParamType::Agent,
+                "rebel_gauge.cancel_require",
+            )
+        && !CancelModule::is_enable_cancel(fighter.module_accessor)
+        && !fighter.is_flag(*FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_DOYLE)
+    {
+        let keep_mul = ParamModule::get_float(
+            fighter.object(),
+            ParamType::Agent,
+            "rebel_gauge.cancel_keep_mul",
+        );
+        WorkModule::mul_float(fighter.module_accessor, keep_mul, 0x4D);
+        summon_arsene(fighter);
+        VarModule::on_flag(fighter.object(), vars::jack::status::SUMMON_FROM_CANCEL);
+        fighter.change_status(FIGHTER_JACK_STATUS_KIND_SUMMON.into(), true.into());
+        true
+    } else {
+        false
+    }
+}
 
 pub unsafe fn special_check_summon(fighter: &mut L2CFighterCommon) -> bool {
     if !fighter.is_flag(*FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_RESERVE_SUMMON_DISPATCH)
@@ -39,7 +71,7 @@ pub unsafe fn summon_arsene(fighter: &mut L2CFighterCommon) -> bool {
     fighter.on_flag(0x200000e3);
     VarModule::set_float(
         fighter.battle_object,
-        vars::jack::instance::REBEL_GAUGE_ON_SUMMON,
+        vars::jack::instance::REBEL_GAUGE_ON_SUMMON_DISPATCH,
         rebel_gauge,
     );
     let status_kind = app::FighterSpecializer_Jack::check_doyle_summon_dispatch(
@@ -52,6 +84,19 @@ pub unsafe fn summon_arsene(fighter: &mut L2CFighterCommon) -> bool {
     } else {
         false
     }
+}
+
+#[skyline::from_offset(0xb2f800)]
+unsafe fn disable_doyle(jack_boma: *mut app::BattleObjectModuleAccessor, arg: u32);
+
+pub unsafe fn dispatch_arsene(fighter: &mut L2CFighterCommon) {
+    fighter.on_flag(0x200000e4); // FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_DOYLE_END
+    let _ = app::FighterSpecializer_Jack::check_doyle_summon_dispatch(
+        fighter.module_accessor,
+        true,
+        false,
+    );
+    disable_doyle(fighter.module_accessor, 0);
 }
 
 unsafe fn set_move_customizer(
@@ -102,6 +147,23 @@ unsafe extern "C" fn jack_move_customizer(fighter: &mut L2CFighterCommon) -> L2C
             std::mem::transmute(special_lw::special_lw_end as *const ()),
         );
         0.into()
+    } else if customize_to == *FIGHTER_WAZA_CUSTOMIZE_TO_SPECIAL_LW_2 {
+        fighter.sv_set_status_func(
+            FIGHTER_STATUS_KIND_SPECIAL_LW.into(),
+            LUA_SCRIPT_STATUS_FUNC_STATUS_PRE.into(),
+            std::mem::transmute(special_lw2::special_lw2_pre as *const ()),
+        );
+        fighter.sv_set_status_func(
+            FIGHTER_STATUS_KIND_SPECIAL_LW.into(),
+            LUA_SCRIPT_STATUS_FUNC_STATUS_MAIN.into(),
+            std::mem::transmute(special_lw2::special_lw2_main as *const ()),
+        );
+        fighter.sv_set_status_func(
+            FIGHTER_STATUS_KIND_SPECIAL_LW.into(),
+            LUA_SCRIPT_STATUS_FUNC_STATUS_END.into(),
+            std::mem::transmute(special_lw2::special_lw2_end as *const ()),
+        );
+        0.into()
     } else if let Some(original) = get_original_customizer(fighter) {
         original(fighter)
     } else {
@@ -123,6 +185,9 @@ fn jack_init(fighter: &mut L2CFighterCommon) {
 
 pub fn install() {
     smashline::install_agent_init_callbacks!(jack_init);
-    special_lw::install();
+    attack_air::install();
+    attack3::install();
     doyle::install();
+    special_lw::install();
+    summon::install();
 }

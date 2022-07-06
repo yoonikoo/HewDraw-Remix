@@ -3,5 +3,8 @@
     <struct hash="rebel_gauge">
         <float hash="add_gauge_mul">0.75</float>
         <float hash="minimum_rebel_to_summon">25</float>
+        <float hash="cancel_keep_mul">0.75</float>
+        <float hash="cancel_require">50</float>
+        <float hash="cancel_cancel_frame">10</float>
     </struct>
 </struct>

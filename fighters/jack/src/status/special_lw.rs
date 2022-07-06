@@ -198,7 +198,7 @@ pub unsafe fn special_lw_main(fighter: &mut L2CFighterCommon) -> L2CValue {
         let speed_y = fighter.get_speed_y(*FIGHTER_KINETIC_ENERGY_ID_GRAVITY) * mul;
 
         fighter.set_speed(
-            Vector2f::new(speed_x, speed_y),
+            Vector2f::new(speed_y, 0.0),
             *FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
         );
     }

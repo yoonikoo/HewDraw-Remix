@@ -392,7 +392,17 @@ pub mod vars {
         pub mod instance {
             // floats
             /// FLOAT: Used to tell Arsene how much meter to start with
-            pub const REBEL_GAUGE_ON_SUMMON: i32 = 0x1100;
+            pub const REBEL_GAUGE_ON_SUMMON_DISPATCH: i32 = 0x0100;
+        }
+
+        pub mod status {
+            // flags
+            /// FLAG: Used to tell the summon status if it is coming out of a cancel
+            pub const SUMMON_FROM_CANCEL: i32 = 0x1100;
+
+            // ints
+            /// INT: Used to tell when to enable summon from canceling
+            pub const CANCEL_SUMMON_CANCEL_FRAME: i32 = 0x1100;
         }
     }
 
