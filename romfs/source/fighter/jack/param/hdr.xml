@@ -2,5 +2,6 @@
 <struct>
     <struct hash="rebel_gauge">
         <float hash="add_gauge_mul">0.75</float>
+        <float hash="minimum_rebel_to_summon">25</float>
     </struct>
 </struct>
