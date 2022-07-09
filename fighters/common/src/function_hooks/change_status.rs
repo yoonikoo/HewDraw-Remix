@@ -56,6 +56,12 @@ unsafe fn change_status_request_from_script_hook(boma: &mut BattleObjectModuleAc
         && next_status == *FIGHTER_STATUS_KIND_FALL {
             clear_buffer = true;
         }
+        // Allow buffered wavedashes when Shield is pressed at any time within Jump input's buffer window
+        if next_status == *FIGHTER_STATUS_KIND_JUMP_SQUAT {
+            if boma.is_cat_flag(Cat1::AirEscape) && !boma.is_cat_flag(Cat1::AttackN) {
+                VarModule::on_flag(boma.object(), vars::common::instance::ENABLE_AIR_ESCAPE_JUMPSQUAT);
+            }
+        }
 
         if boma.kind() == *FIGHTER_KIND_TRAIL
         && StatusModule::status_kind(boma) == *FIGHTER_TRAIL_STATUS_KIND_SPECIAL_S_SEARCH
