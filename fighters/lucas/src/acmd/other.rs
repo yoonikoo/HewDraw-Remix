@@ -151,6 +151,41 @@ unsafe fn escape_air_slide_game(fighter: &mut L2CAgentBase) {
     }
 }
 
+#[acmd_script( agent = "lucas_pkfire", script = "sound_pillar" , category = ACMD_SOUND , low_priority)]
+unsafe fn lucas_pkfire_pillar_sound(fighter: &mut L2CAgentBase) {
+    let lua_state = fighter.lua_state_agent;
+    let boma = fighter.boma();
+    if is_excute(fighter) { 
+        PLAY_SE_REMAIN(fighter, Hash40::new("se_lucas_special_n04_s"));
+    }
+}
+
+#[acmd_script( agent = "lucas", scripts = ["game_appealhir", "game_appealhil"] , category = ACMD_GAME, low_priority)]
+unsafe fn lucas_appeal_hi_game(fighter: &mut L2CAgentBase) {
+    let lua_state = fighter.lua_state_agent;
+    let boma = fighter.boma();
+    frame(lua_state, 40.0);
+    if is_excute(fighter) {
+        if fighter.is_button_on(Buttons::AppealHi) {
+            StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_STATUS_KIND_SLIP_WAIT, true);
+        }
+    }
+}
+
+#[acmd_script( agent = "lucas", scripts = ["game_appeallwr", "game_appeallwl"] , category = ACMD_GAME, low_priority)]
+unsafe fn lucas_appeal_lw_game(fighter: &mut L2CAgentBase) {
+    let lua_state = fighter.lua_state_agent;
+    let boma = fighter.boma();
+    frame(lua_state, 16.0);
+    if is_excute(fighter) {
+        if fighter.is_button_on(Buttons::Guard) && is_training_mode() {
+            let charge_time = ParamModule::get_int(fighter.object(), ParamType::Agent, "attack_up_charge_time");
+            VarModule::set_int(fighter.object(), vars::lucas::instance::SPECIAL_N_OFFENSE_UP_CHARGE_LEVEL, charge_time);
+            VarModule::on_flag(fighter.object(), vars::lucas::instance::SPECIAL_N_OFFENSE_UP_ACTIVE);
+        }
+    }
+}
+
 pub fn install() {
     install_acmd_scripts!(
         escape_air_game,
