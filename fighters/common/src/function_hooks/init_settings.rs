@@ -121,6 +121,8 @@ unsafe fn init_settings_hook(boma: &mut BattleObjectModuleAccessor, situation: s
                 *FIGHTER_RYU_STATUS_KIND_SPECIAL_S_COMMAND,
                 *FIGHTER_RYU_STATUS_KIND_SPECIAL_S_LOOP,
                 *FIGHTER_RYU_STATUS_KIND_SPECIAL_S_END]))
+        || (boma.kind() == *FIGHTER_KIND_FALCO
+            && boma.is_status(*FIGHTER_STATUS_KIND_SPECIAL_HI))
         || (boma.kind() == *FIGHTER_KIND_REFLET
             && boma.is_status(*FIGHTER_STATUS_KIND_SPECIAL_HI))
         {
