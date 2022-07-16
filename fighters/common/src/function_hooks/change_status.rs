@@ -48,6 +48,12 @@ unsafe fn change_status_request_from_script_hook(boma: &mut BattleObjectModuleAc
     let mut clear_buffer = arg3;
 
     if boma.is_fighter() {
+        // Allow buffered wavedashes when Shield is pressed at any time within Jump input's buffer window
+        if next_status == *FIGHTER_STATUS_KIND_JUMP_SQUAT {
+            if boma.is_cat_flag(Cat1::AirEscape) && !boma.is_cat_flag(Cat1::AttackN) {
+                VarModule::on_flag(boma.object(), vars::common::instance::ENABLE_AIR_ESCAPE_JUMPSQUAT);
+            }
+        }
         // Clears buffer when sliding off an edge in a damaged state, to prevent accidental buffered aerials/airdodges (common on missed techs)
         if [*FIGHTER_STATUS_KIND_DOWN,
             *FIGHTER_STATUS_KIND_DOWN_WAIT,
@@ -55,12 +61,6 @@ unsafe fn change_status_request_from_script_hook(boma: &mut BattleObjectModuleAc
             *FIGHTER_STATUS_KIND_DAMAGE].contains(&StatusModule::status_kind(boma))
         && next_status == *FIGHTER_STATUS_KIND_FALL {
             clear_buffer = true;
-        }
-        // Allow buffered wavedashes when Shield is pressed at any time within Jump input's buffer window
-        if next_status == *FIGHTER_STATUS_KIND_JUMP_SQUAT {
-            if boma.is_cat_flag(Cat1::AirEscape) && !boma.is_cat_flag(Cat1::AttackN) {
-                VarModule::on_flag(boma.object(), vars::common::instance::ENABLE_AIR_ESCAPE_JUMPSQUAT);
-            }
         }
 
         if boma.kind() == *FIGHTER_KIND_TRAIL

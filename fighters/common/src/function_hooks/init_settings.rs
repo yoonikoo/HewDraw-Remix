@@ -115,6 +115,7 @@ unsafe fn init_settings_hook(boma: &mut BattleObjectModuleAccessor, situation: s
         }
 
         // Set GroundCliffCheckKind here to pass into init_settings
+        
         if ((boma.kind() == *FIGHTER_KIND_RYU || boma.kind() == *FIGHTER_KIND_KEN)
             && boma.is_status_one_of(&[
                 *FIGHTER_STATUS_KIND_SPECIAL_S,

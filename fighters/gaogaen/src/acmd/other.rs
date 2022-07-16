@@ -7,8 +7,25 @@ use smash::app::BattleObjectModuleAccessor;
 unsafe fn damageflyhi_sound(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
+    frame(lua_state, 1.0);
     if is_excute(fighter) {
-        PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));
+        if !StopModule::is_stop(fighter.module_accessor) {
+            let play_vc = if DamageModule::damage(boma, 0) < 100.0 {
+                app::sv_math::rand(hash40("fighter"), 3)
+            } else {
+                0
+            };
+            if play_vc == 0 {PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));}
+        }
+    }
+    frame(lua_state, 1.1);
+    if is_excute(fighter) {
+        let play_vc = if DamageModule::damage(boma, 0) < 100.0 {
+            app::sv_math::rand(hash40("fighter"), 3)
+        } else {
+            0
+        };
+        if play_vc == 0 {PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));}
     }
 }
 
@@ -16,8 +33,25 @@ unsafe fn damageflyhi_sound(fighter: &mut L2CAgentBase) {
 unsafe fn damageflylw_sound(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
+    frame(lua_state, 1.0);
     if is_excute(fighter) {
-        PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));
+        if !StopModule::is_stop(fighter.module_accessor) {
+            let play_vc = if DamageModule::damage(boma, 0) < 100.0 {
+                app::sv_math::rand(hash40("fighter"), 3)
+            } else {
+                0
+            };
+            if play_vc == 0 {PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));}
+        }
+    }
+    frame(lua_state, 1.1);
+    if is_excute(fighter) {
+        let play_vc = if DamageModule::damage(boma, 0) < 100.0 {
+            app::sv_math::rand(hash40("fighter"), 3)
+        } else {
+            0
+        };
+        if play_vc == 0 {PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));}
     }
 }
 
@@ -25,8 +59,25 @@ unsafe fn damageflylw_sound(fighter: &mut L2CAgentBase) {
 unsafe fn damageflyn_sound(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
+    frame(lua_state, 1.0);
     if is_excute(fighter) {
-        PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));
+        if !StopModule::is_stop(fighter.module_accessor) {
+            let play_vc = if DamageModule::damage(boma, 0) < 100.0 {
+                app::sv_math::rand(hash40("fighter"), 3)
+            } else {
+                0
+            };
+            if play_vc == 0 {PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));}
+        }
+    }
+    frame(lua_state, 1.1);
+    if is_excute(fighter) {
+        let play_vc = if DamageModule::damage(boma, 0) < 100.0 {
+            app::sv_math::rand(hash40("fighter"), 3)
+        } else {
+            0
+        };
+        if play_vc == 0 {PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));}
     }
 }
 
@@ -34,6 +85,13 @@ unsafe fn damageflyn_sound(fighter: &mut L2CAgentBase) {
 unsafe fn damageflyroll_sound(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
+    frame(lua_state, 1.0);
+    if is_excute(fighter) {
+        if !StopModule::is_stop(fighter.module_accessor) {
+            PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));
+        }
+    }
+    frame(lua_state, 1.1);
     if is_excute(fighter) {
         PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));
     }
@@ -43,8 +101,25 @@ unsafe fn damageflyroll_sound(fighter: &mut L2CAgentBase) {
 unsafe fn damageflytop_sound(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
+    frame(lua_state, 1.0);
     if is_excute(fighter) {
-        PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));
+        if !StopModule::is_stop(fighter.module_accessor) {
+            let play_vc = if DamageModule::damage(boma, 0) < 100.0 {
+                app::sv_math::rand(hash40("fighter"), 3)
+            } else {
+                0
+            };
+            if play_vc == 0 {PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));}
+        }
+    }
+    frame(lua_state, 1.1);
+    if is_excute(fighter) {
+        let play_vc = if DamageModule::damage(boma, 0) < 100.0 {
+            app::sv_math::rand(hash40("fighter"), 3)
+        } else {
+            0
+        };
+        if play_vc == 0 {PLAY_FLY_VOICE(fighter, Hash40::new("seq_gaogaen_rnd_futtobi01"), Hash40::new("seq_gaogaen_rnd_futtobi02"));}
     }
 }
 
