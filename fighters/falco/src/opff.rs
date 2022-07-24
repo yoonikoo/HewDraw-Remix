@@ -37,27 +37,25 @@ unsafe fn shine_jc_turnaround(fighter: &mut L2CFighterCommon) {
         let fighter_gravity = KineticModule::get_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY) as *mut FighterKineticEnergyGravity;
         if fighter.is_status (*SITUATION_KIND_AIR) {
             if fighter.motion_frame() <= 1.0 {
-                KineticModule::mul_speed(fighter.module_accessor, &Vector3f::new(0.5, 0.0, 0.0), *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+                KineticModule::mul_speed(fighter.module_accessor, &Vector3f::new(0.0, 0.0, 0.0), *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
             }
             if fighter.motion_frame() > 1.0 && fighter.motion_frame() <= 3.0 {
-                KineticModule::mul_speed(fighter.module_accessor, &Vector3f::new(0.5, 0.0, 0.0), *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+                KineticModule::mul_speed(fighter.module_accessor, &Vector3f::new(0.0, 0.0, 0.0), *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
             }
             if fighter.motion_frame() > 3.0 {
                 smash::app::lua_bind::FighterKineticEnergyGravity::set_accel(fighter_gravity, -0.02666667);
             }
         }
-        if fighter.motion_frame() > 3.0 {
-            if ((fighter.is_status (*FIGHTER_STATUS_KIND_SPECIAL_LW) && fighter.motion_frame() > 6.0)  // Allows for jump cancel on frame 5 in game
-            || fighter.is_status_one_of(&[
-                *FIGHTER_FOX_STATUS_KIND_SPECIAL_LW_HIT,
-                *FIGHTER_FOX_STATUS_KIND_SPECIAL_LW_LOOP,
-                *FIGHTER_FOX_STATUS_KIND_SPECIAL_LW_END]))
-            && !fighter.is_in_hitlag()
-            {
-                fighter.check_jump_cancel();
-            }
+		if ((fighter.is_status (*FIGHTER_STATUS_KIND_SPECIAL_LW) && fighter.motion_frame() > 6.0)  // Allows for jump cancel on frame 5 in game
+		|| fighter.is_status_one_of(&[
+			*FIGHTER_FOX_STATUS_KIND_SPECIAL_LW_HIT,
+			*FIGHTER_FOX_STATUS_KIND_SPECIAL_LW_LOOP,
+			*FIGHTER_FOX_STATUS_KIND_SPECIAL_LW_END]))
+		&& !fighter.is_in_hitlag()
+		{
+			fighter.check_jump_cancel();
+		}
     
-        }   
     }
 }
 
