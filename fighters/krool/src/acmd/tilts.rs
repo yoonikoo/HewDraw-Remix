@@ -134,4 +134,3 @@ pub fn install() {
         krool_attack_hi3_game,
     );
 }
-

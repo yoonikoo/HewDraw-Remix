@@ -103,4 +103,3 @@ pub fn install() {
         krool_attack_s4_lw_game,
     );
 }
-

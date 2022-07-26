@@ -58,4 +58,3 @@ pub fn install() {
         krool_attack_dash_game,
     );
 }
-

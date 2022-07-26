@@ -140,4 +140,3 @@ pub fn install() {
         krool_attack_air_b_game,
     );
 }
-
