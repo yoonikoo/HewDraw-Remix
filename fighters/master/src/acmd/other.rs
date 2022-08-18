@@ -162,19 +162,14 @@ unsafe fn dash_game(fighter: &mut L2CAgentBase) {
     
 }
 
-#[acmd_script( agent = "master", script = "effect_dash" , category = ACMD_EFFECT , low_priority)]
-unsafe fn dash_effect(fighter: &mut L2CAgentBase) {
+#[acmd_script( agent = "master", script = "sound_dash" , category = ACMD_SOUND , low_priority)]
+unsafe fn dash_sound(fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
-    frame(lua_state, 5.0);
+    frame(lua_state, 8.0);
     if is_excute(fighter) {
-        FOOT_EFFECT(fighter, Hash40::new("sys_dash_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.63, 0, 0, 0, 0, 0, 0, false);
-        LAST_EFFECT_SET_ALPHA(fighter, 0.7);
+        PLAY_SE(fighter, Hash40::new("se_master_dash_start"));
     }
-    frame(lua_state, 21.0);
-    if is_excute(fighter) {
-        FOOT_EFFECT(fighter, Hash40::new("null"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.9, 0, 0, 0, 0, 0, 0, false);
-    }    
 }
 
 #[acmd_script( agent = "master", script = "game_turndash" , category = ACMD_GAME , low_priority)]
@@ -369,7 +364,7 @@ pub fn install() {
         escape_air_slide_game,
         master_catch_game,
         dash_game,
-        //dash_effect,
+        dash_sound,
         turn_dash_game,
         master_arrow1_fly_game,
         master_arrow2_search_game,
