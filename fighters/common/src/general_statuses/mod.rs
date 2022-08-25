@@ -26,6 +26,7 @@ mod downdamage;
 mod crawl;
 mod cliff;
 mod catchcut;
+mod escape;
 mod damage;
 // [LUA-REPLACE-REBASE]
 // [SHOULD-CHANGE]
@@ -310,6 +311,7 @@ pub fn install() {
     crawl::install();
     cliff::install();
     catchcut::install();
+    escape::install();
     damage::install();
 
     smashline::install_status_scripts!(
