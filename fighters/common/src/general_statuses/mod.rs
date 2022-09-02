@@ -26,8 +26,8 @@ mod downdamage;
 mod crawl;
 mod cliff;
 mod catchcut;
-mod escape;
 mod damage;
+mod escape;
 // [LUA-REPLACE-REBASE]
 // [SHOULD-CHANGE]
 // Reimplement the whole status script (already done) instead of doing this.
@@ -311,8 +311,8 @@ pub fn install() {
     crawl::install();
     cliff::install();
     catchcut::install();
-    escape::install();
     damage::install();
+    escape::install();
 
     smashline::install_status_scripts!(
         damage_fly_end,
