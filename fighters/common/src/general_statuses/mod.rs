@@ -60,7 +60,19 @@ pub unsafe fn sub_wait_common_Main(fighter: &mut L2CFighterCommon) -> L2CValue {
 
 #[skyline::hook(replace = smash::lua2cpp::L2CFighterCommon_status_pre_DamageAir)]
 pub unsafe fn status_pre_DamageAir(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if VarModule::is_flag(fighter.battle_object, vars::common::instance::IS_KNOCKDOWN_THROW) {
+    //println!("knockback units: {}", DamageModule::reaction(fighter.module_accessor, 0));
+    
+    fighter.clear_lua_stack();
+    lua_args!(fighter, hash40("angle"));
+    sv_information::damage_log_value(fighter.lua_state_agent);
+    let angle = fighter.pop_lua_stack(1).get_f32();
+    let degrees = angle.to_degrees();
+    let meteor_vector_min = WorkModule::get_param_int(fighter.module_accessor, hash40("battle_object"), hash40("meteor_vector_min")) as f32;
+    let meteor_vector_max = WorkModule::get_param_int(fighter.module_accessor, hash40("battle_object"), hash40("meteor_vector_max")) as f32; 
+    
+    if VarModule::is_flag(fighter.battle_object, vars::common::instance::IS_KNOCKDOWN_THROW)
+    || (degrees >= meteor_vector_min && degrees <= meteor_vector_max && DamageModule::reaction(fighter.module_accessor, 0) >= 65.0) {
+        //println!("forced tumble");
         StatusModule::set_status_kind_interrupt(fighter.module_accessor, *FIGHTER_STATUS_KIND_DAMAGE_FLY_METEOR);
         return 1.into();
     }
@@ -139,8 +151,10 @@ fn nro_hook(info: &skyline::nro::NroInfo) {
             sub_air_transition_group_check_air_attack_hook,
             // sub_transition_group_check_air_lasso,
             sub_transition_group_check_ground_jump_mini_attack,
+            sub_transition_group_check_ground_attack,
             sub_transition_group_check_air_escape,
             sub_transition_group_check_ground_escape,
+            sub_transition_group_check_ground_guard,
             sub_transition_group_check_ground
         );
     }
@@ -275,9 +289,19 @@ unsafe fn sub_transition_group_check_air_escape(fighter: &mut L2CFighterCommon) 
     false.into()
 }
 
+#[skyline::hook(replace = L2CFighterCommon_sub_transition_group_check_ground_attack)]
+unsafe fn sub_transition_group_check_ground_attack(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if fighter.is_button_on(Buttons::Catch) {
+        return false.into()
+    }
+    call_original!(fighter)
+}
+
 #[skyline::hook(replace = L2CFighterCommon_sub_transition_group_check_ground_escape)]
 unsafe fn sub_transition_group_check_ground_escape(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if fighter.is_cat_flag(Cat1::JumpButton) || fighter.is_cat_flag(Cat1::Jump) {
+    if fighter.is_cat_flag(Cat1::JumpButton)
+    || fighter.is_cat_flag(Cat1::Jump)
+    || fighter.is_button_on(Buttons::Catch) {
         return false.into()
     }
     call_original!(fighter)
@@ -285,7 +309,9 @@ unsafe fn sub_transition_group_check_ground_escape(fighter: &mut L2CFighterCommo
 
 #[skyline::hook(replace = L2CFighterCommon_sub_transition_group_check_ground_guard)]
 unsafe fn sub_transition_group_check_ground_guard(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if fighter.is_cat_flag(Cat1::JumpButton) || fighter.is_cat_flag(Cat1::Jump) {
+    if fighter.is_cat_flag(Cat1::JumpButton)
+    || fighter.is_cat_flag(Cat1::Jump)
+    || fighter.is_button_on(Buttons::Catch) {
         return false.into()
     }
     call_original!(fighter)
@@ -331,8 +357,7 @@ unsafe fn sub_transition_group_check_ground(fighter: &mut L2CFighterCommon, to_s
         let cat1 = fighter.global_table[CMD_CAT1].get_i32();
         if cat1 & *FIGHTER_PAD_CMD_CAT1_FLAG_TURN_DASH != 0
         && WorkModule::is_enable_transition_term(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_TURN_DASH) {
-            VarModule::on_flag(fighter.battle_object, vars::common::instance::IS_SMASH_TURN);
-            fighter.change_status(FIGHTER_STATUS_KIND_TURN.into(), true.into());
+            fighter.change_status(FIGHTER_STATUS_KIND_TURN_DASH.into(), true.into());
             return true.into();
         }
         if cat1 & *FIGHTER_PAD_CMD_CAT1_FLAG_DASH != 0
