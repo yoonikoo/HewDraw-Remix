@@ -331,6 +331,16 @@ unsafe fn req_on_joint_hook(boma: &mut BattleObjectModuleAccessor, effHash: smas
     original!()(boma, effHash, boneHash, pos, rot, eff_size, arg7, arg8, arg9, arg10, arg11, arg12)
 }
 
+#[skyline::hook(replace=EffectModule::req_follow)]
+unsafe fn req_follow(boma: &mut BattleObjectModuleAccessor, effHash: smash::phx::Hash40, boneHash: smash::phx::Hash40, pos: &smash::phx::Vector3f, rot: &smash::phx::Vector3f, size: f32, arg7: bool, arg8: u32, arg9: i32, arg10: i32, arg11: i32, arg12: i32, arg13: bool, arg14: bool) -> u64 {
+    let mut eff_size = size;
+    // Shrink knockback smoke effect by 25%
+    if effHash.hash == 0x1154cb72bf as u64 {  // hash for kb smoke
+        eff_size = size * 0.75;
+    }
+    original!()(boma, effHash, boneHash, pos, rot, eff_size, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14)
+}
+
 pub fn install() {
     skyline::install_hooks!(
         EFFECT_hook,
@@ -341,6 +351,7 @@ pub fn install() {
         LANDING_EFFECT_hook,
         LANDING_EFFECT_FLIP_hook,
         DOWN_EFFECT_hook,
-        req_on_joint_hook
+        req_on_joint_hook,
+        req_follow
     );
 }
