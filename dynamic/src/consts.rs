@@ -408,7 +408,6 @@ pub mod vars {
             pub const IS_QUICK_DRAW_INSTAKILL: i32 = 0x1100;
         }
     }
-
     pub mod inkling {
         pub mod status {
             // flags

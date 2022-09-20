@@ -204,4 +204,3 @@ pub fn install() {
         lucas_attack_dash_sound,
     );
 }
-

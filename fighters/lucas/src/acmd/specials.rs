@@ -408,4 +408,3 @@ pub fn install() {
         lucas_special_lw_end_effect,
     );
 }
-

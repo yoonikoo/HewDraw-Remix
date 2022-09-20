@@ -194,4 +194,3 @@ pub fn install() {
         attack_lw4,
     );
 }
-

@@ -226,4 +226,3 @@ pub fn install() {
         attack_lw3,
     );
 }
-

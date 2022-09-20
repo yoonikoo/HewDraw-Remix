@@ -136,4 +136,3 @@ pub fn install() {
         attack_11,
     );
 }
-

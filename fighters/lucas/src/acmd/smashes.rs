@@ -552,4 +552,3 @@ pub fn install() {
         lucas_attack_lw4_expression,
     );
 }
-

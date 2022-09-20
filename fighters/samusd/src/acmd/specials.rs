@@ -141,4 +141,3 @@ pub fn install() {
         game_specialairhi,
     );
 }
-

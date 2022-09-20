@@ -411,4 +411,3 @@ pub fn install() {
         lucas_attack_air_lw_sound,
     );
 }
-

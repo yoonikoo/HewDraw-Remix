@@ -169,4 +169,3 @@ pub fn install() {
         //samusd_super_missile_burst_game,
     );
 }
-

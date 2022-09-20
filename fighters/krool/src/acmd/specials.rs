@@ -112,4 +112,3 @@ pub fn install() {
         krool_special_air_n_loop_game,
     );
 }
-
