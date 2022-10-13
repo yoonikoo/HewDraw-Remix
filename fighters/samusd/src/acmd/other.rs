@@ -54,31 +54,23 @@ unsafe fn samusd_cshot_shoot_game(fighter: &mut L2CAgentBase) {
     
 }
 
-#[acmd_script( agent = "samusd_cshot", script = "sound_Shoot", category = ACMD_SOUND, low_priority)]
+#[acmd_script( agent = "samusd_cshot", script = "sound_shoot", category = ACMD_SOUND, low_priority)]
 unsafe fn samusd_cshot_shoot_sound (fighter: &mut L2CAgentBase) {
     let lua_state = fighter.lua_state_agent;
     let boma = fighter.boma();
     frame(lua_state, 1.0);
     if is_excute(fighter) {
         STOP_SE(fighter, Hash40::new("se_samusd_special_n01"));
-    }
-    if is_excute(fighter) {
         if WorkModule::get_float(boma, *WEAPON_SAMUS_CSHOT_INSTANCE_WORK_ID_FLOAT_CHARGE) <= 0.25 {
             PLAY_SE_REMAIN(fighter, Hash40::new("se_samusd_special_n02"));
         } 
-    }
-    if is_excute(fighter) {
         if WorkModule::get_float(boma, *WEAPON_SAMUS_CSHOT_INSTANCE_WORK_ID_FLOAT_CHARGE) <= 0.625 {
             PLAY_SE_REMAIN(fighter, Hash40::new("se_samusd_special_n03"));
         } 
-    }
-    if is_excute(fighter) {
         if WorkModule::get_float(boma, *WEAPON_SAMUS_CSHOT_INSTANCE_WORK_ID_FLOAT_CHARGE) <= 0.875 {
             PLAY_SE_REMAIN(fighter, Hash40::new("se_samusd_special_n04"));
         }
-    }
-    else {
-        if is_excute(fighter) {
+        else {
             PLAY_SE_REMAIN(fighter, Hash40::new("se_samusd_special_n05"));
         }
     }
